@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { Satellite } from './satellite';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'orbit-report';
+	title = 'orbit-report';
 
-  sourceList: Satellite[];
-  displayList: Satellite[];
+	sourceList: Satellite[];
+	displayList: Satellite[];
 
 	constructor() {
 		this.sourceList = [];
@@ -27,11 +27,11 @@ export class AppComponent {
 					let satellite = new Satellite(fetchedSatellites[i].name, fetchedSatellites[i].type, fetchedSatellites[i].launchDate, fetchedSatellites[i].orbitType, fetchedSatellites[i].operational);
 					// add the new Satellite object to sourceList 
 					this.sourceList.push(satellite);
-				 }
+				}
 
 				 // make a copy of the sourceList to be shown to the user
-				 this.displayList = this.sourceList.slice(0);
-	  
+				this.displayList = this.sourceList.slice(0);
+
 			}.bind(this));
 		}.bind(this));
 
@@ -39,11 +39,16 @@ export class AppComponent {
 
 	search(searchTerm: string): void {
 		let matchingSatellites: Satellite[] = [];
+		let matchingSatellitesDebris: Satellite[] = [];
 		searchTerm = searchTerm.toLowerCase();
 		for(let i=0; i < this.sourceList.length; i++) {
 			let name = this.sourceList[i].name.toLowerCase();
+			let type = this.sourceList[i].type.toLowerCase();
 			if (name.indexOf(searchTerm) >= 0) {
 				matchingSatellites.push(this.sourceList[i]);
+			}
+			if (type.indexOf(searchTerm) >=0 ){
+				matchingSatellitesDebris.push(this.sourceList[i])
 			}
 		}
 		// assign this.displayList to be the array of matching satellites
